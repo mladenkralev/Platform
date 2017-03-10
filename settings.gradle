@@ -2,43 +2,11 @@ File bundlesDir = new File(rootDir, 'bundles')
 include ':bundles'
 project(':bundles').projectDir = bundlesDir
 
-include(':bundles:joda-times')
-project(':bundles:joda-times').projectDir = new File(bundlesDir, 'com.softwareag.platform.joda.times')
+include(':bundles:com-test')
+project(':bundles:com-test').projectDir = new File(bundlesDir, 'com.test')
 
-include(':bundles:joda-time-now')
-project(':bundles:joda-time-now').projectDir = new File(bundlesDir, 'com.softwareag.platform.joda.time.now')
+include(':bundles:com-next-test')
+project(':bundles:com-next-test').projectDir = new File(bundlesDir, 'com.next.test')
 
-include(':bundles:joda-interface')
-project(':bundles:joda-interface').projectDir = new File(bundlesDir, 'com.softwareag.platform.joda.interface')
-
-include(':bundles:consumer')
-project(':bundles:consumer').projectDir = new File(bundlesDir, 'com.softwareag.platform.consumer')
-
-include(':bundles:web-app')
-project(':bundles:web-app').projectDir = new File(bundlesDir, 'com.softwareag.platform.web.app')
-
-include(':bundles:container')
-project(':bundles:container').projectDir = new File(bundlesDir, 'com.softwareag.platform.container')
-
-include(':bundles:servlet')
-project(':bundles:servlet').projectDir = new File(bundlesDir, 'com.softwareag.platform.servlet')
-
-File featuresDir = new File(rootDir, 'features')
-include ':features'
-project(':features').projectDir = featuresDir
-
-include(':features:swing')
-project(':features:swing').projectDir = new File(featuresDir, 'com.softwareag.platform.swing')
-
-include(':features:consumer')
-project(':features:consumer').projectDir = new File(featuresDir, 'com.softwareag.platform.consumer')
-
-
-File testDir = new File(rootDir, 'tests')
-include ':tests'
-project(':tests').projectDir = testDir
-
-include(':tests:joda-test')
-project(':tests:joda-test').projectDir = new File(testDir, 'joda-test')
-
+include 'bundles'
 
