@@ -1,6 +1,4 @@
 File bundlesDir = new File(rootDir, 'bundles')
-include ':bundles'
-project(':bundles').projectDir = bundlesDir
 
 include(':bundles:com-test')
 project(':bundles:com-test').projectDir = new File(bundlesDir, 'com.test')
@@ -8,5 +6,7 @@ project(':bundles:com-test').projectDir = new File(bundlesDir, 'com.test')
 include(':bundles:com-next-test')
 project(':bundles:com-next-test').projectDir = new File(bundlesDir, 'com.next.test')
 
-include 'bundles'
+include(':bundles:com-bundle-activator')
+project(':bundles:com-bundle-activator').projectDir = new File(bundlesDir, 'com.bundle.activator')
+
 
