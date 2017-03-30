@@ -1,16 +1,14 @@
 apply plugin: 'java'
-apply plugin: 'com.athaydes.osgi-run'
-apply plugin: "org.jayware.osgi-ds"
 
 buildscript {
 	repositories {
-		jcenter()
 		mavenCentral()
 	}
-	dependencies {
-		classpath "com.athaydes.gradle.osgi:osgi-run-core:1.5.4"
-		classpath "org.jayware:gradle-osgi-ds:0.5.4"
-	}
+
+}
+
+dependencies {
+    compile group: 'org.osgi', name: 'org.osgi.core', version: '4.3.0'
 }
 /**
  * All projects configurations
@@ -21,15 +19,26 @@ allprojects {
 	}
 }
 
-dependencies {
-	compile group: 'org.apache.felix', name: 'org.apache.felix.dependencymanager', version: '4.4.0'
-}
-
 /**
  * Sub-porjects projects configurations
  */
 subprojects {
+	apply plugin: 'osgi'
 	apply plugin: 'java'
+
+	repositories {
+		mavenCentral() // add repos to get your dependencies from
+	}
+
+    sourceSets {
+        main {
+            java {
+            }
+            resources {
+                srcDirs = ['src/resources']
+            }
+        }
+    }
 }
 
 /**
@@ -39,14 +48,3 @@ task {
 	print "asd"
 }
 
-runOsgi {
-	// which bundles do you want to add?
-	// transitive deps will be automatically added
-	bundles += subprojects
-
-	// do not deploy jars matching these regexes (not needed, this is the default)
-	excludedBundles = ['org\\.osgi\\..*']
-
-	// make the manifest visible to the IDE for OSGi support
-	//copyManifestTo file( 'auto-generated/MANIFEST.MF' )
-}

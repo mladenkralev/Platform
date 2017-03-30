@@ -1,3 +1,7 @@
-dependencies {
-	compileOnly 'org.osgi:org.osgi.service.component.annotations:1.3.0'
+jar {
+    manifest { // the manifest of the default jar is of type OsgiManifest
+        instruction 'Bundle-Vendor', 'MyCompan1y'
+        instruction 'Bundle-Description', 'Platform2: Metrics 2 Measures Framework10'
+        instruction 'Bundle-DocURL', 'http://www.mycompany.com222'
+    }
 }
