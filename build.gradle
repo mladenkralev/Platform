@@ -1,4 +1,4 @@
-apply plugin: 'java'
+apply plugin: 'base'
 
 buildscript {
 	repositories {
@@ -7,9 +7,6 @@ buildscript {
 
 }
 
-dependencies {
-    compile group: 'org.osgi', name: 'org.osgi.core', version: '4.3.0'
-}
 /**
  * All projects configurations
  */
@@ -23,28 +20,26 @@ allprojects {
  * Sub-porjects projects configurations
  */
 subprojects {
-	apply plugin: 'osgi'
-	apply plugin: 'java'
+	if(it.name != 'bundles') {
+		apply plugin: 'osgi'
+		apply plugin: 'java'
 
-	repositories {
-		mavenCentral() // add repos to get your dependencies from
+		repositories {
+			mavenCentral() // add repos to get your dependencies from
+		}
 	}
-
-    sourceSets {
-        main {
-            java {
-            }
-            resources {
-                srcDirs = ['src/resources']
-            }
-        }
-    }
 }
 
 /**
  * Taasks
  */
-task {
-	print "asd"
+task copyBundlesJars(type: Copy) {
+	from ((subprojects-project('bundles')).collect { it.tasks.withType(Jar) })
+	into "$buildDir/libs"
+}
+
+task copyBundlesDependencies(type: Copy, dependsOn:'copyBundlesJars') {
+	from ((subprojects-project('bundles')).collect { it.configurations.getByName('runtime') })
+	into "$buildDir/libs"
 }
 
