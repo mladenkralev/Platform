@@ -9,4 +9,5 @@ project(':bundles:com-next-test').projectDir = new File(bundlesDir, 'com.next.te
 include(':bundles:com-bundle-activator')
 project(':bundles:com-bundle-activator').projectDir = new File(bundlesDir, 'com.bundle.activator')
 
-
+include(':bundles:com-runtime-felix-bundles')
+project(':bundles:com-runtime-felix-bundles').projectDir = new File(bundlesDir, 'com.runtime.felix.bundles')

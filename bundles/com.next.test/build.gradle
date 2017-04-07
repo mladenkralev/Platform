@@ -4,3 +4,7 @@ dependencies {
 	compile project (':bundles:com-test')
 	runtime project (':bundles:com-test')
 }
+
+declarativeServices {
+	declarations = project.file( 'src/main/osgi/components.xml' )
+}

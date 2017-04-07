@@ -1,6 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'com.athaydes.osgi-run'
-apply plugin: "org.jayware.osgi-ds"
+
 
 buildscript {
 	repositories {
@@ -9,7 +9,6 @@ buildscript {
 	}
 	dependencies {
 		classpath "com.athaydes.gradle.osgi:osgi-run-core:1.5.4"
-		classpath "org.jayware:gradle-osgi-ds:0.5.4"
 	}
 }
 /**
@@ -22,6 +21,7 @@ allprojects {
 }
 
 dependencies {
+	//needed for osgi runtime
 	compile group: 'org.apache.felix', name: 'org.apache.felix.dependencymanager', version: '4.4.0'
 }
 
@@ -29,24 +29,25 @@ dependencies {
  * Sub-porjects projects configurations
  */
 subprojects {
-	apply plugin: 'java'
-}
-
-/**
- * Taasks
- */
-task {
-	print "asd"
+	if(it.name !='bundles') {
+		apply plugin: 'java'
+		apply plugin: 'osgi'
+		apply plugin: 'com.athaydes.osgi-ds'
+	}
 }
 
 runOsgi {
-	// which bundles do you want to add?
-	// transitive deps will be automatically added
+	/**
+	 * -Xms<size>        set initial Java heap size
+	 * -Xmx<size>        set maximum Java heap size
+	 * -Xss<size>        set java thread stack size
+	 */
+
 	bundles += subprojects
-
-	// do not deploy jars matching these regexes (not needed, this is the default)
-	excludedBundles = ['org\\.osgi\\..*']
-
-	// make the manifest visible to the IDE for OSGi support
-	//copyManifestTo file( 'auto-generated/MANIFEST.MF' )
+	configSettings = 'equinox'          				 	// use Equinox's config file instead of Felix's
+	osgiMain = 'org.eclipse.osgi:org.eclipse.osgi:3.7.1' 	// use a specific version of Equinox
+	javaArgs = '-Xms=128m-Xmx=256m-Xss=512m'       			// pass some args to the Java process
+	programArgs = '-console'              					// pass some arguments to the Equinox starter
+	config += [ 'osgi.clean': true ]   				   		// add properties to the Equinox config
+	outDir = 'runtime'                    					// the environment will be built at "${project.buildDir}/runtime"
 }
