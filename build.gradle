@@ -1,53 +1,50 @@
 apply plugin: 'java'
 apply plugin: 'com.athaydes.osgi-run'
-
+apply plugin: 'groovy'
+apply plugin: 'maven'
 
 buildscript {
-	repositories {
-		jcenter()
-		mavenCentral()
-	}
-	dependencies {
-		classpath "com.athaydes.gradle.osgi:osgi-run-core:1.5.4"
-	}
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.athaydes.gradle.osgi:osgi-run-core:1.5.4"
+    }
 }
+
 /**
  * All projects configurations
  */
 allprojects {
-	repositories {
-		mavenCentral() // add repos to get your dependencies from
-	}
+    repositories {
+        mavenCentral() // add repos to get your dependencies from
+    }
 }
 
 dependencies {
-	//needed for osgi runtime
-	compile group: 'org.apache.felix', name: 'org.apache.felix.dependencymanager', version: '4.4.0'
+    //needed for osgi runtime
+    compile group: 'org.apache.felix', name: 'org.apache.felix.dependencymanager', version: '4.4.0'
 }
 
 /**
  * Sub-porjects projects configurations
  */
 subprojects {
-	if(it.name !='bundles') {
-		apply plugin: 'java'
-		apply plugin: 'osgi'
-		apply plugin: 'com.athaydes.osgi-ds'
-	}
+    if (it.name != 'bundles') {
+        apply plugin: 'java'
+        apply plugin: 'osgi'
+    }
 }
 
 runOsgi {
-	/**
-	 * -Xms<size>        set initial Java heap size
-	 * -Xmx<size>        set maximum Java heap size
-	 * -Xss<size>        set java thread stack size
-	 */
+    def allBundlesFromProjects = (subprojects - project('bundles'))
 
-	bundles += subprojects
-	configSettings = 'equinox'          				 	// use Equinox's config file instead of Felix's
-	osgiMain = 'org.eclipse.osgi:org.eclipse.osgi:3.7.1' 	// use a specific version of Equinox
-	javaArgs = '-Xms=128m-Xmx=256m-Xss=512m'       			// pass some args to the Java process
-	programArgs = '-console'              					// pass some arguments to the Equinox starter
-	config += [ 'osgi.clean': true ]   				   		// add properties to the Equinox config
-	outDir = 'runtime'                    					// the environment will be built at "${project.buildDir}/runtime"
+    /**
+     * -Xms<size>        set initial Java heap size
+     * -Xmx<size>        set maximum Java heap size
+     * -Xss<size>        set java thread stack size
+     */
+    bundles += allBundlesFromProjects
 }
+
