@@ -1,0 +1,37 @@
+subprojects {
+    dependencies {
+        testCompile 'junit:junit:[4,)'
+    }
+
+
+}
+
+
+test {
+    testLogging {
+        // Show that tests are run in the command-line output
+        events 'started', 'passed'
+    }
+}
+
+/*
+ * Workaround as Gradle does not create the classes directory if there is nothing
+ * to compile which causes BND to throw an exception.
+ * This is for all test modules.
+ */
+classes.doFirst {
+    subprojects.each {
+        String pathToProject = it.buildDir
+        new File(pathToProject+"/classes/main").mkdirs()
+    }
+}
+
+
+/*
+ * Workaround as Gradle does not create the classes directory if there is nothing
+ * to compile which causes BND to throw an exception.
+ * This is for root dir
+ */
+classes.doFirst {
+    new File("$buildDir/classes/main").mkdirs()
+}

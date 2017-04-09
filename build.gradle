@@ -25,6 +25,7 @@ allprojects {
 dependencies {
     //needed for osgi runtime
     compile group: 'org.apache.felix', name: 'org.apache.felix.dependencymanager', version: '4.4.0'
+
 }
 
 /**
@@ -37,8 +38,10 @@ subprojects {
     }
 }
 
+
+
 runOsgi {
-    def allBundlesFromProjects = (subprojects - project('bundles'))
+    def allBundlesFromProjects = (subprojects - project('bundles') - project('tests'))
 
     /**
      * -Xms<size>        set initial Java heap size
@@ -47,4 +50,6 @@ runOsgi {
      */
     bundles += allBundlesFromProjects
 }
+
+
 

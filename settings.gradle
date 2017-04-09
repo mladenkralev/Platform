@@ -8,3 +8,13 @@ project(':bundles:com-next-test').projectDir = new File(bundlesDir, 'com.next.te
 
 include(':bundles:com-bundle-activator')
 project(':bundles:com-bundle-activator').projectDir = new File(bundlesDir, 'com.bundle.activator')
+
+include 'tests'
+ProjectDescriptor testsProject = project(':tests')
+testsProject.projectDir = new File(rootDir, 'tests')
+
+testsProject.projectDir.eachDir { File dir ->
+    if (!dir.name.startsWith('.') && dir.name.endsWith('.test') ) {
+        include(testsProject.path + ':' + dir.name)
+    }
+}
