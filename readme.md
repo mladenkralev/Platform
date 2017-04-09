@@ -1,4 +1,4 @@
-# Project Title
+# Osgi Platform
 
 Basic Osgi Platform
 
@@ -10,7 +10,7 @@ Basic Osgi Platform
 4. Adding a bundle is easy. Add your jaava code in bundles/[name.of.your.module]. Modify setting.gradle.
 	include(':bundles:[name-of-your-module]')
 	project(':bundles:[name-of-your-module]').projectDir = new File(bundlesDir, '[name.of.your.module]')
-**Note where dash(-) is used and where dot(.) is used ##
+**Note where dash(-) is used and where dot(.) is used. **
 5.Adding a test is simply adding a folder ending with ('-test') under 'tests' folder.
 
 ### Prerequisites
