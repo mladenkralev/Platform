@@ -1,6 +1,6 @@
-# Osgi Platform
+# Example usage of renatoathaydes/osgi-run's runtime
 
-Basic Osgi Platform
+Testing renatoathaydes/osgi-run's osgi runtime
 
 ## Getting Started
 
@@ -13,10 +13,16 @@ Basic Osgi Platform
 **Note where dash(-) is used and where dot(.) is used. **
 5.Adding a test is simply adding a folder ending with ('-test') under 'tests' folder.
 
+---
+**NOTE**
+
+Note that currently this works with JAVA 8
+---
+
+
 ### Prerequisites
 
-1. Git
-2. Java
+1. Java 8
 
 ## Deployment
 
